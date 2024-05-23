@@ -46,12 +46,13 @@ func NewAwsGoAppStack(scope constructs.Construct, id string, props *AwsGoAppStac
 		DeployOptions: &awsapigateway.StageOptions{
 			LoggingLevel: awsapigateway.MethodLoggingLevel_INFO,
 		},
+		CloudWatchRole: jsii.Bool(true),
 	})
 
 	integration := awsapigateway.NewLambdaIntegration(myFunction, nil)
 
 	// define the routes
-	registerResource := api.Root().AddResource(jsii.String("register/{id}"), nil)
+	registerResource := api.Root().AddResource(jsii.String("register"), nil)
 	registerResource.AddMethod(jsii.String("POST"), integration, nil)
 
 	// define the routes
